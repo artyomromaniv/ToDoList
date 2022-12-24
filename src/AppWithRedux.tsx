@@ -38,49 +38,42 @@ export type TasksStateType = {
 
 
 export const AppWithRedux = () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
 
-    let todolist = useSelector<AppRootStateType,Array<TodolistType>>(state => state.todolists)
-
-    let tasks = useSelector<AppRootStateType,TasksStateType>(state => state.tasks)
-
+    let todolist = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists)
+    let tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
+
     const removeTask = (id: string, todolistId: string) => {
-        dispatchTasks(removeTaskAC(id,todolistId))
+        (removeTaskAC(id, todolistId))
     }
 
     const addTask = (title: string, todolistId: string) => {
-        dispatchTasks(addTaskAC(title,todolistId))
+        (addTaskAC(title, todolistId))
     }
 
-    const changeTaskStatus =(id: string, newIsDone: boolean, todolistId: string) => {
-        dispatchTasks(changeTaskStatusAC(id,newIsDone,todolistId))
+    const changeTaskStatus = (id: string, newIsDone: boolean, todolistId: string) => {
+        (changeTaskStatusAC(id, newIsDone, todolistId))
     }
 
     const changeTaskTitle = (id: string, newTitle: string, todolistId: string) => {
-        dispatchTasks(changeTaskTitleAC(id,newTitle,todolistId))
+        (changeTaskTitleAC(id, newTitle, todolistId))
     }
 
     const changeTodolistFilter = (newValue: FilterValuesType, todolistId: string) => {
-        dispatchTodolists(changeTodolistFilterAC(todolistId,newValue))
+        dispatch(changeTodolistFilterAC(todolistId, newValue))
     }
 
     const removeTodolist = (id: string) => {
-        let action = removeTodolistAC(id)
-        dispatchTodolists(action)
-        dispatchTasks(action)
+        dispatch(removeTodolistAC(id))
     }
 
-    const changeTodolistTitle = (todolistID: string, newTitle: string) =>  {
-        dispatchTodolists(changeTodolistTitleAC(todolistID,newTitle))
+    const changeTodolistTitle = (todolistID: string, newTitle: string) => {
+        dispatch(changeTodolistTitleAC(todolistID, newTitle))
     }
 
     const addTodolist = (title: string) => {
-       let action = addTodolistAC(title)
-        dispatchTodolists(action)
-        dispatchTasks(action)
+        dispatch(addTodolistAC(title))
     }
 
     return (
@@ -102,7 +95,7 @@ export const AppWithRedux = () => {
                 </Grid>
                 <Grid container spacing={3}>
                     {
-                        todolists.map(tl => {
+                        todolist.map(tl => {
                             let allTodolistTasks = tasks[tl.id];
                             let tasksForTodolist = allTodolistTasks;
 
